@@ -36,7 +36,7 @@ const enable = !!document.querySelector("meta#vscode-workbench-auth-session");
 if (enable) main()
 
 function main() {
-  const clear = useInterval(() => clickContinue, 1e3);
+  const clear = useInterval(() => clickContinue(), 1e3);
   return () => clear();
 }
 
@@ -49,6 +49,7 @@ function clickContinue() {
         false ||
         s.match(/Copilot has been working on this problem for a while/) ||
         s.match(/Run command in the terminal/) ||
+        s.match(/Continue to iterate\?/) ||
         s.match(/Allow task run\?/)
     );
   if (!stucked) return;
