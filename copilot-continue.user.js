@@ -3,7 +3,7 @@
 // @namespace   https://snomiao.com
 // @match       *://*/*
 // @grant       none
-// @version     1.0
+// @version     1.1.0
 // @author      snomiao
 // @description Auto-clicks the "Continue" button when GitHub Copilot gets stuck
 // @homepage    https://github.com/snomiao/copilot-continue.user.js
