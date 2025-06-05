@@ -4,11 +4,32 @@
 // @match       *://*/*
 // @grant       none
 // @version     1.0
-// @author      -
-// @description 2025/5/16 13:00:33
+// @author      snomiao
+// @description Auto-clicks the "Continue" button when GitHub Copilot gets stuck
+// @homepage    https://github.com/snomiao/copilot-continue.user.js
+// @supportURL  https://github.com/snomiao/copilot-continue.user.js/issues
+// @updateURL   https://raw.githubusercontent.com/snomiao/copilot-continue.user.js/main/copilot-continue.user.js
+// @downloadURL https://raw.githubusercontent.com/snomiao/copilot-continue.user.js/main/copilot-continue.user.js
+// @license     MIT
+// @compatible  chrome
+// @compatible  firefox
+// @compatible  edge
+// @compatible  opera
 // ==/UserScript==
 
 // webhook...update =   fetch(globalThis.GM_info.script.downloadURL)
+
+/* 
+ * Copilot Continue - A userscript to automatically continue GitHub Copilot
+ * 
+ * This script automatically clicks the "Continue" button when GitHub Copilot
+ * shows interruption messages like:
+ * - "Copilot has been working on this problem for a while"
+ * - "Run command in the terminal"
+ * - "Allow task run?"
+ * 
+ * The script runs in VS Code web environments and checks for interruptions every second.
+ */
 
 const enable = !!document.querySelector("meta#vscode-workbench-auth-session");
 
