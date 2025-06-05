@@ -2,6 +2,10 @@
 
 A browser userscript that automatically clicks the "Continue" button in GitHub Copilot when it gets stuck or asks for permission to continue.
 
+![Version](https://img.shields.io/badge/version-1.0-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
+![Platform](https://img.shields.io/badge/platform-Chrome%20%7C%20Firefox%20%7C%20Edge%20%7C%20Opera-lightgrey)
+
 ## Features
 
 - Automatically detects when GitHub Copilot displays common interruption messages
