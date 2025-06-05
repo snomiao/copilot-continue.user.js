@@ -12,7 +12,7 @@
 
 const enable = !!document.querySelector("meta#vscode-workbench-auth-session");
 
-if (enable) window.addEventListener("load", main);
+if (enable) main()
 
 function main() {
   const clear = useInterval(() => clickContinue, 1e3);
