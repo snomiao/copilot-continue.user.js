@@ -36,19 +36,47 @@ const enable = !!document.querySelector("meta#vscode-workbench-auth-session");
 if (enable) main()
 
 function main() {
-  const clear = useInterval(() => clickContinue(), 1e3);
+  const clear = useInterval(() => clicks(), 1e3);
   return () => clear();
+}
+function clicks(){
+  clickTryAgain() ||     clickContinue()
+}
+
+function clickTryAgain(){
+  const stucked = $$("div.rendered-markdown")
+    .map((e) => e.innerText)
+    .flatMap((e) => (e ? [e] : [])) // empty filter
+    .map(e=>e.replace(/\s+/g,' '))
+    .findLast(s=> false||
+        s.match("The model unexpectedly did not return a response, which may indicate a service issue. Please report a bug.")
+              );
+  if(!stucked) return;
+
+  //
+  // const btn = $$("a.monaco-button").findLast(
+  //   (e) => e.textContent === "Try Again"
+  // );
+  // if (!btn) return;
+  // btn.click();
+
+  // Seems not working by click try again
+  // So reload page when try again.
+  location.href = location.href
+
+  return true;
 }
 
 function clickContinue() {
   const stucked = $$("div.rendered-markdown")
     .map((e) => e.innerText)
     .flatMap((e) => (e ? [e] : [])) // empty filter
+    .map(e=>e.replace(/\s+/g,' '))
     .findLast(
       (s) =>
         false ||
         s.match(/Copilot has been working on this problem for a while/) ||
-        s.match(/Run command in the terminal/) ||
+        s.match(/Run command in terminal/) ||
         s.match(/Continue to iterate\?/) ||
         s.match(/Allow task run\?/)
     );
