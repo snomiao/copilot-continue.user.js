@@ -3,7 +3,7 @@
 // @namespace   https://snomiao.com
 // @match       *://*/*
 // @grant       none
-// @version     1.1.1
+// @version     1.2.0
 // @author      snomiao
 // @description Auto-clicks the "Continue" button when GitHub Copilot gets stuck
 // @homepage    https://github.com/snomiao/copilot-continue.user.js
@@ -19,39 +19,43 @@
 
 // webhook...update =   fetch(globalThis.GM_info.script.downloadURL)
 
-/* 
+/*
  * Copilot Continue - A userscript to automatically continue GitHub Copilot
- * 
+ *
  * This script automatically clicks the "Continue" button when GitHub Copilot
  * shows interruption messages like:
  * - "Copilot has been working on this problem for a while"
  * - "Run command in the terminal"
  * - "Allow task run?"
- * 
+ *
  * The script runs in VS Code web environments and checks for interruptions every second.
  */
 
 const enable = !!document.querySelector("meta#vscode-workbench-auth-session");
 
-if (enable) main()
+if (enable) main();
 
 function main() {
   const clear = useInterval(() => clicks(), 1e3);
   return () => clear();
 }
-function clicks(){
-  clickTryAgain() ||     clickContinue()
+function clicks() {
+  clickTryAgain() || clickContinue();
 }
 
-function clickTryAgain(){
+function clickTryAgain() {
   const stucked = $$("div.rendered-markdown")
     .map((e) => e.innerText)
     .flatMap((e) => (e ? [e] : [])) // empty filter
-    .map(e=>e.replace(/\s+/g,' '))
-    .findLast(s=> false||
-        s.match("The model unexpectedly did not return a response, which may indicate a service issue. Please report a bug.")
-              );
-  if(!stucked) return;
+    .map((e) => e.replace(/\s+/g, " "))
+    .findLast(
+      (s) =>
+        false ||
+        s.match(
+          "The model unexpectedly did not return a response, which may indicate a service issue. Please report a bug."
+        )
+    );
+  if (!stucked) return;
 
   //
   // const btn = $$("a.monaco-button").findLast(
@@ -62,7 +66,7 @@ function clickTryAgain(){
 
   // Seems not working by click try again
   // So reload page when try again.
-  location.href = location.href
+  location.href = location.href;
 
   return true;
 }
@@ -71,7 +75,7 @@ function clickContinue() {
   const stucked = $$("div.rendered-markdown")
     .map((e) => e.innerText)
     .flatMap((e) => (e ? [e] : [])) // empty filter
-    .map(e=>e.replace(/\s+/g,' '))
+    .map((e) => e.replace(/\s+/g, " "))
     .findLast(
       (s) =>
         false ||
