@@ -31,66 +31,69 @@
  * The script runs in VS Code web environments and checks for interruptions every second.
  */
 
-const enable = !!document.querySelector("meta#vscode-workbench-auth-session");
+const actionMatchers = {
+  cilckContinue: [
+    /Copilot has been working on this problem for a while/,
+    /Run command in the terminal/,
+    /Continue to iterate\?/,
+    /Allow task run\?/,
+  ],
+  clickGrant: [
+    /To get more relevant Copilot Chat results, we need permission to read the contents of your repository on GitHub./,
+  ],
+  // clickTryAgain: [
+  //   /The model unexpectedly did not return a response, which may indicate a service issue. Please report a bug./,
+  // ],
+  refresh: [
+    /The model unexpectedly did not return a response, which may indicate a service issue. Please report a bug./,
+  ],
+};
+const actions = {
+  refresh: () => {
+    location.href = location.href;
+  },
+  cilckContinue: () => {
+    const btn = $$("a.monaco-button").findLast(
+      (e) => e.textContent === "Continue"
+    );
+    if (!btn) return;
+    btn.click();
+  },
+  clickGrant: () => {
+    const btn = $$("a.monaco-button").findLast(
+      (e) => e.textContent === "Grant"
+    );
+    if (!btn) return;
+    btn.click();
+  },
+  clickTryAgain: () => {
+    const btn = $$("a.monaco-button").findLast(
+      (e) => e.textContent === "Try Again"
+    );
+    if (!btn) return;
+    btn.click();
+  },
+};
 
+const enable = !!document.querySelector("meta#vscode-workbench-auth-session");
 if (enable) main();
 
 function main() {
-  const clear = useInterval(() => clicks(), 1e3);
+  const clear = useInterval(() => loop(), 1e3);
   return () => clear();
 }
-function clicks() {
-  clickTryAgain() || clickContinue();
-}
-
-function clickTryAgain() {
-  const stucked = $$("div.rendered-markdown")
+function loop() {
+  const text = $$("div.rendered-markdown")
     .map((e) => e.innerText)
     .flatMap((e) => (e ? [e] : [])) // empty filter
-    .map((e) => e.replace(/\s+/g, " "))
-    .findLast(
-      (s) =>
-        false ||
-        s.match(
-          "The model unexpectedly did not return a response, which may indicate a service issue. Please report a bug."
-        )
-    );
-  if (!stucked) return;
+    .map((e) => e.replace(/\s+/g, " "));
 
-  //
-  // const btn = $$("a.monaco-button").findLast(
-  //   (e) => e.textContent === "Try Again"
-  // );
-  // if (!btn) return;
-  // btn.click();
-
-  // Seems not working by click try again
-  // So reload page when try again.
-  location.href = location.href;
-
-  return true;
-}
-
-function clickContinue() {
-  const stucked = $$("div.rendered-markdown")
-    .map((e) => e.innerText)
-    .flatMap((e) => (e ? [e] : [])) // empty filter
-    .map((e) => e.replace(/\s+/g, " "))
-    .findLast(
-      (s) =>
-        false ||
-        s.match(/Copilot has been working on this problem for a while/) ||
-        s.match(/Run command in terminal/) ||
-        s.match(/Continue to iterate\?/) ||
-        s.match(/Allow task run\?/)
-    );
-  if (!stucked) return;
-  const btn = $$("a.monaco-button").findLast(
-    (e) => e.textContent === "Continue"
-  );
-  if (!btn) return;
-  btn.click();
-  return true;
+  for (const [action, matchers] of Object.entries(actionMatchers)) {
+    if (text.some((s) => matchers.some((m) => s.match(m)))) {
+      actions[action]?.();
+      return;
+    }
+  }
 }
 
 function $$(sel) {
