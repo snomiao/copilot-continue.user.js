@@ -16,13 +16,15 @@ A browser userscript that automatically clicks the "Continue" button in GitHub C
 ## Detected Interruptions
 
 This userscript automatically handles the following interruptions:
+
 - "Copilot has been working on this problem for a while"
-- "Run command in the terminal"
+- "Run command in terminal"
 - "Allow task run?"
 
 ## Installation
 
 1. Install a userscript manager extension for your browser:
+
    - [Tampermonkey](https://www.tampermonkey.net/) (Chrome, Edge, Firefox, Safari)
    - [Violentmonkey](https://violentmonkey.github.io/) (Chrome, Firefox)
    - [Greasemonkey](https://www.greasespot.net/) (Firefox)
@@ -38,6 +40,7 @@ No configuration or manual activation is required. The script will run in the ba
 ## How It Works
 
 The script:
+
 1. Checks every second for specific interruption messages in rendered markdown content
 2. When an interruption is detected, finds the "Continue" button
 3. Automatically clicks the button to resume Copilot's operation
