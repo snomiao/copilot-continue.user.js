@@ -3,7 +3,7 @@
 // @namespace   https://snomiao.com
 // @match       *://*/*
 // @grant       none
-// @version     1.2.0
+// @version     1.2.1
 // @author      snomiao
 // @description Auto-clicks the "Continue" button when GitHub Copilot gets stuck
 // @homepage    https://github.com/snomiao/copilot-continue.user.js
@@ -17,7 +17,7 @@
 // @compatible  opera
 // ==/UserScript==
 
-// webhook...update =   fetch(globalThis.GM_info.script.downloadURL)
+// webhook...update = fetch(globalThis.GM_info.script.downloadURL)
 
 /*
  * Copilot Continue - A userscript to automatically continue GitHub Copilot
@@ -34,20 +34,20 @@
 const actionMatchers = {
   cilckContinue: [
     /Copilot has been working on this problem for a while/,
-    /Run command in the terminal/,
+    /Run command in terminal/,
     /Continue to iterate\?/,
     /Allow task run\?/,
   ],
   clickGrant: [
     /To get more relevant Copilot Chat results, we need permission to read the contents of your repository on GitHub./,
   ],
-  // clickTryAgain: [
-  //   /The model unexpectedly did not return a response, which may indicate a service issue. Please report a bug./,
-  // ],
-  refresh: [
+  clickTryAgain: [
     /The model unexpectedly did not return a response, which may indicate a service issue. Please report a bug./,
   ],
 };
+// Counter for try again attempts
+let tryAgainCount = 0;
+
 const actions = {
   refresh: () => {
     location.href = location.href;
@@ -67,6 +67,12 @@ const actions = {
     btn.click();
   },
   clickTryAgain: () => {
+    tryAgainCount++;
+    if (tryAgainCount > 3) {
+      // Refresh the page if we've tried more than 3 times
+      location.href = location.href;
+      return;
+    }
     const btn = $$("a.monaco-button").findLast(
       (e) => e.textContent === "Try Again"
     );
