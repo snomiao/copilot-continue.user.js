@@ -34,7 +34,7 @@
 const actionMatchers = {
   cilckContinue: [
     /Copilot has been working on this problem for a while/,
-    /Run command in terminal/,
+    /Run command in terminal\./,
     /Continue to iterate\?/,
     /Allow task run\?/,
   ],
@@ -44,11 +44,15 @@ const actionMatchers = {
   clickTryAgain: [
     /The model unexpectedly did not return a response, which may indicate a service issue. Please report a bug./,
   ],
+  clickRetryIcon: [/Language model unavailable./],
 };
 // Counter for try again attempts
 let tryAgainCount = 0;
 
 const actions = {
+  default: () => {
+    console.warn("No action matched. Please check the action matchers.");
+  },
   refresh: () => {
     location.href = location.href;
   },
@@ -96,7 +100,7 @@ function loop() {
 
   for (const [action, matchers] of Object.entries(actionMatchers)) {
     if (text.some((s) => matchers.some((m) => s.match(m)))) {
-      actions[action]?.();
+      (actions[action] || actions.default)?.();
       return;
     }
   }
