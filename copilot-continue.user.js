@@ -3,7 +3,7 @@
 // @namespace   https://snomiao.com
 // @match       *://*/*
 // @grant       none
-// @version     1.2.4
+// @version     1.2.5
 // @author      snomiao
 // @description Auto-clicks the "Continue" button when GitHub Copilot gets stuck
 // @homepage    https://github.com/snomiao/copilot-continue.user.js
@@ -31,21 +31,21 @@
 
 const actionMatchers = {
   cilckContinue: [
-    /Copilot has been working on this problem for a while/,
-    /Run command in terminal\./,
-    /Continue to iterate\?/,
-    /Allow task run\?/,
-    /Allow test run\?/,
+    /^Copilot has been working on this problem for a while/,
+    /^Run command in terminal/,
+    /^Continue to iterate\?/,
+    /^Allow task run\?/,
+    /^Allow test run\?/,
   ],
   clickGrant: [
-    /To get more relevant Copilot Chat results, we need permission to read the contents of your repository on GitHub./,
+    /^To get more relevant Copilot Chat results, we need permission to read the contents of your repository on GitHub./,
   ],
   clickTryAgain: [
-    /The model unexpectedly did not return a response, which may indicate a service issue. Please report a bug./,
-    /Sorry, your request failed. Please try again./,
+    /^The model unexpectedly did not return a response, which may indicate a service issue. Please report a bug./,
+    /^Sorry, your request failed. Please try again./,
 
   ],
-  clickRetryIcon: [/Language model unavailable./],
+  clickRetryIcon: [/^Language model unavailable./],
 };
 
 const actions = {
@@ -121,3 +121,4 @@ function useInterval(...args) {
   const id = setInterval(...args);
   return () => clearInterval(id);
 }
+d
