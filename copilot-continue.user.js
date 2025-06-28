@@ -46,8 +46,6 @@ const actionMatchers = {
   ],
   clickRetryIcon: [/Language model unavailable./],
 };
-// Counter for try again attempts
-let tryAgainCount = 0;
 
 const actions = {
   default: () => {
@@ -70,19 +68,22 @@ const actions = {
     if (!btn) return;
     btn.click();
   },
-  clickTryAgain: () => {
-    tryAgainCount++;
-    if (tryAgainCount > 3) {
-      // Refresh the page if we've tried more than 3 times
-      location.href = location.href;
-      return;
+  clickTryAgain: (
+    (tryAgainCount = 0) =>
+    () => {
+      tryAgainCount++;
+      if (tryAgainCount > 3) {
+        // Refresh the page if we've tried more than 3 times
+        location.href = location.href;
+        return;
+      }
+      const btn = $$("a.monaco-button").findLast(
+        (e) => e.textContent === "Try Again"
+      );
+      if (!btn) return;
+      btn.click();
     }
-    const btn = $$("a.monaco-button").findLast(
-      (e) => e.textContent === "Try Again"
-    );
-    if (!btn) return;
-    btn.click();
-  },
+  )(),
 };
 
 const enable = !!document.querySelector("meta#vscode-workbench-auth-session");
