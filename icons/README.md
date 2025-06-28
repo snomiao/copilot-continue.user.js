@@ -1,33 +1,20 @@
 # Icons
 
-This directory contains the icon files for the Chrome extension:
+Extension icons in required sizes:
+- ✅ `icon16.png` - Toolbar icon
+- ✅ `icon32.png` - Windows requirement  
+- ✅ `icon48.png` - Extension management
+- ✅ `icon128.png` - Chrome Web Store
+- 📄 `icon.svg` - Source file
 
-- ✅ `icon16.png` - 16x16 pixels (toolbar icon)
-- ✅ `icon32.png` - 32x32 pixels (Windows computers often require this size)
-- ✅ `icon48.png` - 48x48 pixels (extension management page)
-- ✅ `icon128.png` - 128x128 pixels (Chrome Web Store and installation)
-- 📄 `icon.svg` - Source SVG file used to generate the PNG icons
-
-## Icon Design
-
-The current icons feature:
-
-- **Blue gradient background** (#0066cc to #004499) representing stability and trust
-- **White play/continue triangle** symbolizing the "continue" action
-- **Animated green dots** (in SVG) representing automation and continuous activity
-- **Small "C" letter** for "Copilot" branding
-- **Professional appearance** that works well in browser toolbars
-
-The design emphasizes the extension's core purpose: automatically continuing GitHub Copilot when it gets stuck.
+## Design
+- Blue gradient background (#0066cc to #004499)
+- White continue triangle symbol
+- Professional appearance for browser toolbars
 
 ## Regenerating Icons
-
-If you need to modify the icons:
-
-If you need to modify the icons:
-
-1. Edit the `icon.svg` file with any vector graphics editor
-2. Use ImageMagick to regenerate the PNG files:
+1. Edit `icon.svg` with any vector graphics editor
+2. Use ImageMagick to generate PNG files:
    ```bash
    convert icon.svg -resize 16x16 icon16.png
    convert icon.svg -resize 32x32 icon32.png
