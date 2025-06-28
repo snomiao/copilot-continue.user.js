@@ -1,95 +1,117 @@
 # Copilot Continue
 
-A browser userscript that automatically handles GitHub Copilot interruptions by clicking appropriate buttons when Copilot gets stuck or asks for permission to continue.
+Automatically handles GitHub Copilot interruptions by clicking "Continue", "Grant", or "Try Again" buttons when Copilot gets stuck.
 
 ![Version](https://img.shields.io/badge/version-1.2.2-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Platform](https://img.shields.io/badge/platform-Chrome%20%7C%20Firefox%20%7C%20Edge%20%7C%20Opera-lightgrey)
 
-## Features
+## What It Does
 
-- Automatically detects when GitHub Copilot displays various interruption messages
-- Handles multiple types of interruptions with appropriate button clicks:
-  - Clicks "Continue" for workflow interruptions
-  - Clicks "Grant" for permission requests
-  - Clicks "Try Again" for service errors (with automatic retry limit and page refresh)
-  - Handles "Language model unavailable" errors
-- Works in VS Code web environments where Copilot is active
-- Runs every second to check for interruptions
-- Smart retry mechanism with fallback to page refresh after multiple failed attempts
+- ✅ Clicks "Continue" when Copilot stops working
+- ✅ Clicks "Grant" for permission requests
+- ✅ Clicks "Try Again" for service errors (auto-refreshes after 3 attempts)
+- ✅ Works automatically in VS Code web environments
+- ✅ Smart retry mechanism with fallback recovery
 
-## Detected Interruptions
+## Quick Install
 
-This userscript automatically handles the following types of interruptions:
-
-### Continue Actions
-- "Copilot has been working on this problem for a while"
-- "Run command in terminal."
-- "Continue to iterate?"
-- "Allow task run?"
-- "Allow test run?"
-
-### Permission Requests
-- "To get more relevant Copilot Chat results, we need permission to read the contents of your repository on GitHub."
-
-### Service Errors
-- "The model unexpectedly did not return a response, which may indicate a service issue. Please report a bug."
-- "Language model unavailable."
-
-## Installation
-
-1. Install a userscript manager extension for your browser:
-
-   - [Tampermonkey](https://www.tampermonkey.net/) (Chrome, Edge, Firefox, Safari)
-   - [Violentmonkey](https://violentmonkey.github.io/) (Chrome, Firefox)
+1. **Install a userscript manager:**
+   - [Tampermonkey](https://www.tampermonkey.net/) (recommended)
+   - [Violentmonkey](https://violentmonkey.github.io/)
    - [Greasemonkey](https://www.greasespot.net/) (Firefox)
 
-2. Install this userscript by clicking on the raw script link:
+2. **Install the script:**
    ```
    https://raw.githubusercontent.com/snomiao/copilot-continue.user.js/main/copilot-continue.user.js
    ```
-   Or copy the script content into your userscript manager's editor.
 
-## Usage
-
-Once installed, the userscript automatically activates when it detects you're in a VS Code web environment (by checking for the presence of the `meta#vscode-workbench-auth-session` element).
-
-No configuration or manual activation is required. The script will run in the background and automatically handle different types of Copilot interruptions by clicking the appropriate buttons.
-
+That's it! Works automatically in VS Code web environments.
 ## How It Works
 
-The script:
+The script automatically activates in VS Code web environments and:
+1. Monitors for Copilot interruption messages every second
+2. Clicks the appropriate button based on the message type
+3. Implements smart retry logic for persistent errors
+4. Refreshes the page after 3 failed attempts
 
-1. Checks every second for specific interruption messages in rendered markdown content
-2. When an interruption is detected, determines the appropriate action based on the message type:
-   - **Continue**: Clicks "Continue" button for workflow interruptions
-   - **Grant**: Clicks "Grant" button for permission requests  
-   - **Try Again**: Clicks "Try Again" button for service errors (with retry counter)
-   - **Retry**: Handles language model unavailability
-3. Implements smart retry logic that refreshes the page after multiple failed "Try Again" attempts
-4. Uses robust DOM selection to find the correct buttons in VS Code's interface
+## Supported Messages
 
-## Technical Details
+**Continue Actions:**
+- "Copilot has been working on this problem for a while"
+- "Run command in terminal" / "Continue to iterate?"
+- "Allow task run?" / "Allow test run?"
 
-### Error Handling
-- **Try Again Limit**: After 3 failed "Try Again" attempts, the script automatically refreshes the page to recover from persistent errors
-- **Button Detection**: Uses `findLast()` to select the most recent/relevant button when multiple buttons exist
-- **Text Normalization**: Normalizes whitespace in text content for reliable pattern matching
+**Permission Requests:**
+- Repository access permissions → clicks "Grant"
 
-### Supported Environments
-- VS Code Web (vscode.dev, github.dev)
-- Any web-based VS Code instance with Copilot integration
-- Detection based on presence of VS Code workbench authentication metadata
+**Service Errors:**
+- "Model unexpectedly did not return a response" → clicks "Try Again"
+- "Language model unavailable" → automatic retry
 
-### Performance
-- Lightweight polling every 1000ms (1 second)
-- Efficient DOM querying using CSS selectors
-- Minimal memory footprint with proper cleanup
+## Chrome Extension
+
+Also available as a Chrome extension for easier installation and management!
+
+### Quick Install
+
+#### From Source
+1. Clone this repository
+2. Open `chrome://extensions/` → Enable "Developer mode"
+3. Click "Load unpacked" → Select this folder
+
+#### From Chrome Web Store
+*Coming soon*
+
+### Extension Features
+- ✅ "Continue" for workflow interruptions
+- ✅ "Grant" for permission requests  
+- ✅ "Try Again" for service errors (auto-refresh after 3 attempts)
+- ✅ Language model unavailable messages
+- Works automatically - no setup needed
+- Check extension popup to verify it's active
+
+### Development
+
+**File Structure:**
+```
+├── manifest.json       # Extension config
+├── content.js          # Main script  
+├── copilot-continue.user.js # Core logic
+├── popup.html/js       # Extension popup
+└── icons/              # Extension icons
+```
+
+**Making Changes:**
+1. Edit files → Reload extension at `chrome://extensions/`
+2. Refresh VS Code tabs to apply changes
+3. Run `npm run package` to build for distribution
+
+### Troubleshooting
+
+**Not working?**
+- Ensure you're in VS Code web environment (vscode.dev, github.dev)
+- Check extension popup shows "Active in VS Code"
+- Look for `[Copilot Continue]` messages in browser console (F12)
+- Reload extension and refresh VS Code tab
+
+**Common Issues:**
+- "Not in VS Code environment" → Use VS Code in browser
+- No action when stuck → Check console for errors  
+- Icon not visible → Pin extension to toolbar
+
+### Permissions & Privacy
+- **activeTab**: For popup communication
+- **host_permissions**: To run on VS Code sites
+- **No data collection** - everything runs locally
+- **No external requests** - completely offline operation
+
+## Support
+
+- [GitHub Issues](https://github.com/snomiao/copilot-continue.user.js/issues)
+- For userscript issues: check your userscript manager console
+- For extension issues: check browser console in VS Code tabs
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Author
-
-[snomiao](https://snomiao.com)
+MIT License - [snomiao](https://snomiao.com)
