@@ -72,8 +72,7 @@ const actions = {
   clickTryAgain: (
     (tryAgainCount = 0) =>
       () => {
-        tryAgainCount++;
-        if (tryAgainCount > 3) {
+        if (tryAgainCount >= 3) {
           // Refresh the page if we've tried more than 3 times
           location.href = location.href;
           return;
@@ -83,6 +82,7 @@ const actions = {
         );
         if (!btn) return;
         btn.click();
+        tryAgainCount++;
       }
   )(),
 };
