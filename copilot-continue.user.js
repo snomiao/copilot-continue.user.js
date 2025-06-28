@@ -3,7 +3,7 @@
 // @namespace   https://snomiao.com
 // @match       *://*/*
 // @grant       none
-// @version     1.2.2
+// @version     1.2.3
 // @author      snomiao
 // @description Auto-clicks the "Continue" button when GitHub Copilot gets stuck
 // @homepage    https://github.com/snomiao/copilot-continue.user.js
@@ -37,6 +37,7 @@ const actionMatchers = {
     /Run command in terminal\./,
     /Continue to iterate\?/,
     /Allow task run\?/,
+    /Allow test run\?/,
   ],
   clickGrant: [
     /To get more relevant Copilot Chat results, we need permission to read the contents of your repository on GitHub./,
