@@ -17,8 +17,6 @@
 // @compatible  opera
 // ==/UserScript==
 
-// webhook...update = fetch(globalThis.GM_info.script.downloadURL)
-
 /*
  * Copilot Continue - A userscript to automatically continue GitHub Copilot
  *
@@ -44,6 +42,8 @@ const actionMatchers = {
   ],
   clickTryAgain: [
     /The model unexpectedly did not return a response, which may indicate a service issue. Please report a bug./,
+    /Sorry, your request failed. Please try again./,
+
   ],
   clickRetryIcon: [/Language model unavailable./],
 };
@@ -71,19 +71,19 @@ const actions = {
   },
   clickTryAgain: (
     (tryAgainCount = 0) =>
-    () => {
-      tryAgainCount++;
-      if (tryAgainCount > 3) {
-        // Refresh the page if we've tried more than 3 times
-        location.href = location.href;
-        return;
+      () => {
+        tryAgainCount++;
+        if (tryAgainCount > 3) {
+          // Refresh the page if we've tried more than 3 times
+          location.href = location.href;
+          return;
+        }
+        const btn = $$("a.monaco-button").findLast(
+          (e) => e.textContent === "Try Again"
+        );
+        if (!btn) return;
+        btn.click();
       }
-      const btn = $$("a.monaco-button").findLast(
-        (e) => e.textContent === "Try Again"
-      );
-      if (!btn) return;
-      btn.click();
-    }
   )(),
 };
 
