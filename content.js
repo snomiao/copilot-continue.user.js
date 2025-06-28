@@ -16,15 +16,5 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   return true;
 });
 
-// The actual userscript logic will be loaded via the manifest.json
-// which includes both copilot-continue.user.js and this content.js
+// The actual userscript logic is loaded via manifest.json
 console.log('[Copilot Continue] Chrome extension content script loaded');
-
-// Message listener for popup communication
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.action === 'checkVSCode') {
-    const isVSCode = !!document.querySelector("meta#vscode-workbench-auth-session");
-    sendResponse(isVSCode);
-  }
-  return true;
-});
