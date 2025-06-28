@@ -88,7 +88,12 @@ const actions = {
 };
 
 const enable = !!document.querySelector("meta#vscode-workbench-auth-session");
-if (enable) main();
+
+// Prevent double execution if loaded both as userscript and extension
+if (enable && !window.copilotContinueLoaded) {
+  window.copilotContinueLoaded = true;
+  main();
+}
 
 function main() {
   const clear = useInterval(() => loop(), 1e3);

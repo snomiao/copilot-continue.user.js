@@ -81,3 +81,6 @@ logs
 # Temporary files
 tmp/
 temp/
+
+
+*.zip

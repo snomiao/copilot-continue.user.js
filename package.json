@@ -1,0 +1,23 @@
+{
+  "name": "copilot-continue-extension",
+  "version": "1.2.3",
+  "description": "Chrome extension that auto-clicks the Continue button when GitHub Copilot gets stuck",
+  "scripts": {
+    "build": "echo 'No build process needed for this extension'",
+    "package": "zip -r copilot-continue-extension.zip . -x '*.git*' 'node_modules/*' '*.zip' '*.md' 'package.json' 'package-lock.json'",
+    "dev": "echo 'Load the extension in Chrome by going to chrome://extensions/, enabling Developer mode, and clicking Load unpacked'"
+  },
+  "keywords": [
+    "chrome-extension",
+    "github-copilot",
+    "automation",
+    "vscode"
+  ],
+  "author": "snomiao",
+  "license": "MIT",
+  "homepage": "https://github.com/snomiao/copilot-continue.user.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/snomiao/copilot-continue.user.js.git"
+  }
+}
