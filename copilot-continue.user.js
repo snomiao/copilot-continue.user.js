@@ -27,7 +27,7 @@
  * - "Allow task run?"
  *
  * The script runs in VS Code web environments and checks for interruptions every second.
- * 
+ *
  * Note for AI: dont forget to bump version number in the header when you modify this script.
  */
 
@@ -48,52 +48,37 @@ const actionMatchers = {
     /^The model unexpectedly did not return a response, which may indicate a service issue. Please report a bug./,
     /^Sorry, your request failed. Please try again./,
   ],
-  clickRetryIcon: [/^Language model unavailable./],
+  clickRetryIcon: [/^Language model unavailable/],
 };
 
 const actions = {
   default: () => {
     console.warn("No action matched. Please check the action matchers.");
   },
-  refresh: () => {
-    location.href = location.href;
-  },
-  cilckContinue: () => {
-    const btn = $$("a.monaco-button").findLast(
-      (e) => e.textContent === "Continue",
-    );
-    if (!btn) return;
-    btn.click();
-  },
-  clickGrant: () => {
-    const btn = $$("a.monaco-button").findLast(
-      (e) => e.textContent === "Grant",
-    );
-    if (!btn) return;
-    btn.click();
-  },
+  refresh: () => (location.href = location.href),
+  clickRetryIcon: () => $$('a[aria-label="Retry"]').findLast(Boolean)?.click(),
+  cilckContinue: () =>
+    $$("a.monaco-button").findLast(textContentEq("Continue"))?.click(),
+  clickGrant: () =>
+    $$("a.monaco-button").findLast(textContentEq("Grant"))?.click(),
   clickTryAgain: (
     (tryAgainCount = 0) =>
-      () => {
-        if (tryAgainCount >= 3) {
-          // Refresh the page if we've tried more than 3 times
-          location.href = location.href;
-          return;
-        }
-        const btn = $$("a.monaco-button").findLast(
-          (e) => e.textContent === "Try Again",
-        );
-        if (!btn) return;
-        btn.click();
-        tryAgainCount++;
-      }
+    () => {
+      if (tryAgainCount >= 3) return (location.href = location.href);
+      const btn = $$("a.monaco-button").findLast(textContentEq("Try Again"));
+      if (!btn) return;
+      btn.click();
+      tryAgainCount++;
+    }
   )(),
 };
-
+function textContentEq(content) {
+  return (e) => e.textContent === content;
+}
 const enable = !!document.querySelector("meta#vscode-workbench-auth-session");
 
 // Prevent double execution if loaded both as userscript and extension
-if (enable && !window.copilotContinueLoaded) {
+if (enable) {
   window.copilotContinueLoaded = true;
   main();
 }
