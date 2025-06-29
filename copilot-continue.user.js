@@ -3,7 +3,7 @@
 // @namespace   https://snomiao.com
 // @match       *://*/*
 // @grant       none
-// @version     1.2.5
+// @version     1.2.6
 // @author      snomiao
 // @description Auto-clicks the "Continue" button when GitHub Copilot gets stuck
 // @homepage    https://github.com/snomiao/copilot-continue.user.js
@@ -27,6 +27,8 @@
  * - "Allow task run?"
  *
  * The script runs in VS Code web environments and checks for interruptions every second.
+ * 
+ * Note for AI: dont forget to update version number in the header when you modify this script.
  */
 
 const actionMatchers = {
