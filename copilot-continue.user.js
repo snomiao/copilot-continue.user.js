@@ -33,6 +33,8 @@ const actionMatchers = {
   cilckContinue: [
     /^Copilot has been working on this problem for a while/,
     /^Run command in terminal/,
+    /^Run command `.*`\?/,
+    /^Run command in background terminal/,
     /^Continue to iterate\?/,
     /^Allow task run\?/,
     /^Allow test run\?/,
@@ -43,7 +45,6 @@ const actionMatchers = {
   clickTryAgain: [
     /^The model unexpectedly did not return a response, which may indicate a service issue. Please report a bug./,
     /^Sorry, your request failed. Please try again./,
-
   ],
   clickRetryIcon: [/^Language model unavailable./],
 };
@@ -57,33 +58,33 @@ const actions = {
   },
   cilckContinue: () => {
     const btn = $$("a.monaco-button").findLast(
-      (e) => e.textContent === "Continue"
+      (e) => e.textContent === "Continue",
     );
     if (!btn) return;
     btn.click();
   },
   clickGrant: () => {
     const btn = $$("a.monaco-button").findLast(
-      (e) => e.textContent === "Grant"
+      (e) => e.textContent === "Grant",
     );
     if (!btn) return;
     btn.click();
   },
   clickTryAgain: (
     (tryAgainCount = 0) =>
-      () => {
-        if (tryAgainCount >= 3) {
-          // Refresh the page if we've tried more than 3 times
-          location.href = location.href;
-          return;
-        }
-        const btn = $$("a.monaco-button").findLast(
-          (e) => e.textContent === "Try Again"
-        );
-        if (!btn) return;
-        btn.click();
-        tryAgainCount++;
+    () => {
+      if (tryAgainCount >= 3) {
+        // Refresh the page if we've tried more than 3 times
+        location.href = location.href;
+        return;
       }
+      const btn = $$("a.monaco-button").findLast(
+        (e) => e.textContent === "Try Again",
+      );
+      if (!btn) return;
+      btn.click();
+      tryAgainCount++;
+    }
   )(),
 };
 
@@ -121,4 +122,3 @@ function useInterval(...args) {
   const id = setInterval(...args);
   return () => clearInterval(id);
 }
-d
