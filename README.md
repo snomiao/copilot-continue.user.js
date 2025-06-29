@@ -27,9 +27,11 @@ Automatically handles GitHub Copilot interruptions by clicking "Continue", "Gran
    ```
 
 That's it! Works automatically in VS Code web environments.
+
 ## How It Works
 
 The script automatically activates in VS Code web environments and:
+
 1. Monitors for Copilot interruption messages every second
 2. Clicks the appropriate button based on the message type
 3. Implements smart retry logic for persistent errors
@@ -38,14 +40,17 @@ The script automatically activates in VS Code web environments and:
 ## Supported Messages
 
 **Continue Actions:**
+
 - "Copilot has been working on this problem for a while"
 - "Run command in terminal" / "Continue to iterate?"
 - "Allow task run?" / "Allow test run?"
 
 **Permission Requests:**
+
 - Repository access permissions → clicks "Grant"
 
 **Service Errors:**
+
 - "Model unexpectedly did not return a response" → clicks "Try Again"
 - "Language model unavailable" → automatic retry
 
@@ -56,16 +61,19 @@ Also available as a Chrome extension for easier installation and management!
 ### Quick Install
 
 #### From Source
+
 1. Clone this repository
 2. Open `chrome://extensions/` → Enable "Developer mode"
 3. Click "Load unpacked" → Select this folder
 
 #### From Chrome Web Store
-*Coming soon*
+
+_Coming soon_
 
 ### Extension Features
+
 - ✅ "Continue" for workflow interruptions
-- ✅ "Grant" for permission requests  
+- ✅ "Grant" for permission requests
 - ✅ "Try Again" for service errors (auto-refresh after 3 attempts)
 - ✅ Language model unavailable messages
 - Works automatically - no setup needed
@@ -74,15 +82,17 @@ Also available as a Chrome extension for easier installation and management!
 ### Development
 
 **File Structure:**
+
 ```
 ├── manifest.json       # Extension config
-├── content.js          # Main script  
+├── content.js          # Main script
 ├── copilot-continue.user.js # Core logic
 ├── popup.html/js       # Extension popup
 └── icons/              # Extension icons
 ```
 
 **Making Changes:**
+
 1. Edit files → Reload extension at `chrome://extensions/`
 2. Refresh VS Code tabs to apply changes
 3. Run `npm run package` to build for distribution
@@ -90,17 +100,20 @@ Also available as a Chrome extension for easier installation and management!
 ### Troubleshooting
 
 **Not working?**
+
 - Ensure you're in VS Code web environment (vscode.dev, github.dev)
 - Check extension popup shows "Active in VS Code"
 - Look for `[Copilot Continue]` messages in browser console (F12)
 - Reload extension and refresh VS Code tab
 
 **Common Issues:**
+
 - "Not in VS Code environment" → Use VS Code in browser
-- No action when stuck → Check console for errors  
+- No action when stuck → Check console for errors
 - Icon not visible → Pin extension to toolbar
 
 ### Permissions & Privacy
+
 - **activeTab**: For popup communication
 - **host_permissions**: To run on VS Code sites
 - **No data collection** - everything runs locally

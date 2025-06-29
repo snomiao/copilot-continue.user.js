@@ -3,12 +3,8 @@
   "name": "Copilot Continue",
   "version": "1.2.3",
   "description": "Auto-clicks the Continue button when GitHub Copilot gets stuck",
-  "permissions": [
-    "activeTab"
-  ],
-  "host_permissions": [
-    "*://*/*"
-  ],
+  "permissions": ["activeTab"],
+  "host_permissions": ["*://*/*"],
   "content_scripts": [
     {
       "matches": ["*://*/*"],

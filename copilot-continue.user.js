@@ -28,7 +28,7 @@
  *
  * The script runs in VS Code web environments and checks for interruptions every second.
  * 
- * Note for AI: dont forget to update version number in the header when you modify this script.
+ * Note for AI: dont forget to bump version number in the header when you modify this script.
  */
 
 const actionMatchers = {
@@ -74,19 +74,19 @@ const actions = {
   },
   clickTryAgain: (
     (tryAgainCount = 0) =>
-    () => {
-      if (tryAgainCount >= 3) {
-        // Refresh the page if we've tried more than 3 times
-        location.href = location.href;
-        return;
+      () => {
+        if (tryAgainCount >= 3) {
+          // Refresh the page if we've tried more than 3 times
+          location.href = location.href;
+          return;
+        }
+        const btn = $$("a.monaco-button").findLast(
+          (e) => e.textContent === "Try Again",
+        );
+        if (!btn) return;
+        btn.click();
+        tryAgainCount++;
       }
-      const btn = $$("a.monaco-button").findLast(
-        (e) => e.textContent === "Try Again",
-      );
-      if (!btn) return;
-      btn.click();
-      tryAgainCount++;
-    }
   )(),
 };
 

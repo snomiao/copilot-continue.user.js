@@ -1,18 +1,21 @@
 # Icons
 
 Extension icons in required sizes:
+
 - ✅ `icon16.png` - Toolbar icon
-- ✅ `icon32.png` - Windows requirement  
+- ✅ `icon32.png` - Windows requirement
 - ✅ `icon48.png` - Extension management
 - ✅ `icon128.png` - Chrome Web Store
 - 📄 `icon.svg` - Source file
 
 ## Design
+
 - Blue gradient background (#0066cc to #004499)
 - White continue triangle symbol
 - Professional appearance for browser toolbars
 
 ## Regenerating Icons
+
 1. Edit `icon.svg` with any vector graphics editor
 2. Use ImageMagick to generate PNG files:
    ```bash
@@ -35,6 +38,7 @@ Icons should:
 ## Alternative Designs
 
 Consider these design concepts for future versions:
+
 - A play button (▶️) symbol
 - An arrow pointing right (→)
 - The letter "C" for "Continue" or "Copilot"
