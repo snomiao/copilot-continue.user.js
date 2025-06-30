@@ -55,8 +55,8 @@ const actions = {
   default: () => {
     console.warn("No action matched. Please check the action matchers.");
   },
-  refresh: () => {
-    location.href = location.href;
+  reload: () => {
+    location.reload();
   },
   cilckContinue: () => {
     const btn = $$("a.monaco-button").findLast(
@@ -75,11 +75,9 @@ const actions = {
   clickTryAgain: (
     (tryAgainCount = 0) =>
       () => {
-        if (tryAgainCount >= 3) {
-          // Refresh the page if we've tried more than 3 times
-          location.href = location.href;
-          return;
-        }
+        if (tryAgainCount >= 3)
+          return location.reload();
+
         const btn = $$("a.monaco-button").findLast(
           (e) => e.textContent === "Try Again",
         );
