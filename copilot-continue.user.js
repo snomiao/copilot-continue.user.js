@@ -74,28 +74,28 @@ const actions = {
   },
   clickTryAgain: (
     (tryAgainCount = 0) =>
-    () => {
-      if (tryAgainCount >= 3) {
-        // Refresh the page if we've tried more than 3 times
-        location.href = location.href;
-        return;
+      () => {
+        if (tryAgainCount >= 3) {
+          // Refresh the page if we've tried more than 3 times
+          location.href = location.href;
+          return;
+        }
+        const btn = $$("a.monaco-button").findLast(
+          (e) => e.textContent === "Try Again",
+        );
+        if (!btn) return;
+        btn.click();
+        tryAgainCount++;
       }
-      const btn = $$("a.monaco-button").findLast(
-        (e) => e.textContent === "Try Again",
-      );
-      if (!btn) return;
-      btn.click();
-      tryAgainCount++;
-    }
   )(),
 };
 
 const enable = !!document.querySelector("meta#vscode-workbench-auth-session");
 
 // Prevent double execution if loaded both as userscript and extension
-if (enable && !window.copilotContinueLoaded) {
-  window.copilotContinueLoaded = true;
+if (enable && !globalThis.copilotContinueLoaded) {
   main();
+  globalThis.copilotContinueLoaded = true;
 }
 
 function main() {
