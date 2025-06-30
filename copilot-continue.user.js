@@ -52,9 +52,8 @@ const actionMatchers = {
 };
 
 const actions = {
-  default: () => {
-    console.warn("Ndo action matched. Please check the action matchers.");
-  },
+  default: () =>
+    console.warn("No action matched. Please check the action matchers."),
   refresh: () => (location.reload()),
   clickRetryIcon: () => $$('a[aria-label="Retry"]').findLast(Boolean)?.click(),
   cilckContinue: () =>
