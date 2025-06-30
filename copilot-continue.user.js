@@ -3,7 +3,7 @@
 // @namespace   https://snomiao.com
 // @match       *://*/*
 // @grant       none
-// @version     1.2.6
+// @version     1.2.7
 // @author      snomiao
 // @description Auto-clicks the "Continue" button when GitHub Copilot gets stuck
 // @homepage    https://github.com/snomiao/copilot-continue.user.js
@@ -53,9 +53,9 @@ const actionMatchers = {
 
 const actions = {
   default: () => {
-    console.warn("No action matched. Please check the action matchers.");
+    console.warn("Ndo action matched. Please check the action matchers.");
   },
-  refresh: () => (location.href = location.href),
+  refresh: () => (location.reload()),
   clickRetryIcon: () => $$('a[aria-label="Retry"]').findLast(Boolean)?.click(),
   cilckContinue: () =>
     $$("a.monaco-button").findLast(textContentEq("Continue"))?.click(),
@@ -63,13 +63,13 @@ const actions = {
     $$("a.monaco-button").findLast(textContentEq("Grant"))?.click(),
   clickTryAgain: (
     (tryAgainCount = 0) =>
-    () => {
-      if (tryAgainCount >= 3) return (location.href = location.href);
-      const btn = $$("a.monaco-button").findLast(textContentEq("Try Again"));
-      if (!btn) return;
-      btn.click();
-      tryAgainCount++;
-    }
+      () => {
+        if (tryAgainCount >= 3) return (location.reload());
+        const btn = $$("a.monaco-button").findLast(textContentEq("Try Again"));
+        if (!btn) return;
+        btn.click();
+        tryAgainCount++;
+      }
   )(),
 };
 function textContentEq(content) {
@@ -78,9 +78,9 @@ function textContentEq(content) {
 const enable = !!document.querySelector("meta#vscode-workbench-auth-session");
 
 // Prevent double execution if loaded both as userscript and extension
-if (enable) {
-  window.copilotContinueLoaded = true;
+if (enable && !globalThis.copilotContinueLoaded) {
   main();
+  globalThis.copilotContinueLoaded = true;
 }
 
 function main() {
