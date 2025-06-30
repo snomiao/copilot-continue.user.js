@@ -28,7 +28,7 @@
  *
  * The script runs in VS Code web environments and checks for interruptions every second.
  *
- * Note for AI: dont forget to bump version number in the header when you modify this script.
+ * Notes for Copilot: dont forget to bump version number in the header when you modify this script.
  */
 
 const actionMatchers = {
