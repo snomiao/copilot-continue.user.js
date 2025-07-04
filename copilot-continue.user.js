@@ -49,7 +49,7 @@ const actionMatchers = {
     /^Sorry, your request failed. Please try again./,
     /^Sorry, no response was returned./
   ],
-  clickRetryIcon: [/^Language model unavailable/],
+  clickRetryIcon: [/^Language model unavailable/, /^Copilot setup failed/],
 };
 
 const actions = {
