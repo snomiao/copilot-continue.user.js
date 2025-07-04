@@ -6,6 +6,16 @@ Automatically handles GitHub Copilot interruptions by clicking "Continue", "Gran
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Platform](https://img.shields.io/badge/platform-Chrome%20%7C%20Firefox%20%7C%20Edge%20%7C%20Opera-lightgrey)
 
+## ⚠️ Security Warning
+
+**Only use this script in trusted repositories!** This extension automatically clicks buttons in GitHub Copilot, which could be exploited through prompt injection attacks in untrusted codebases. Malicious prompts or comments in code could potentially trick Copilot into generating harmful content that this script would automatically accept, risking your host system.
+
+**Recommended usage:**
+- ✅ Use in your own private repositories
+- ✅ Use in trusted open-source projects
+- ❌ Avoid in unknown or potentially malicious repositories
+- ❌ Be cautious when working with external code contributions
+
 ## What It Does
 
 - ✅ Clicks "Continue" when Copilot stops working

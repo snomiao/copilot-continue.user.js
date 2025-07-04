@@ -7,6 +7,7 @@
     "fmt": "prettier --write .",
     "package": "zip -r copilot-continue-extension.zip . -x '*.git*' 'node_modules/*' '*.zip' '*.md' 'package.json' 'package-lock.json'",
     "dev": "echo 'Load the extension in Chrome by going to chrome://extensions/, enabling Developer mode, and clicking Load unpacked'",
+    "test": "pass",
     "prepare": "husky"
   },
   "keywords": [
@@ -26,5 +27,8 @@
     "husky": "^9.1.7",
     "prettier": "^3.6.2",
     "semantic-release": "^24.2.6"
+  },
+  "dependencies": {
+    "semantic-release-chrome": "^3.2.0"
   }
 }
