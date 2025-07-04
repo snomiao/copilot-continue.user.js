@@ -1,5 +1,5 @@
 {
-  "name": "copilot-continue-extension",
+  "name": "copilot-continue",
   "version": "1.2.3",
   "description": "Chrome extension that auto-clicks the Continue button when GitHub Copilot gets stuck",
   "scripts": {
