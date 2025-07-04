@@ -47,6 +47,7 @@ const actionMatchers = {
   clickTryAgain: [
     /^The model unexpectedly did not return a response, which may indicate a service issue. Please report a bug./,
     /^Sorry, your request failed. Please try again./,
+    /^Sorry, no response was returned./
   ],
   clickRetryIcon: [/^Language model unavailable/],
 };
