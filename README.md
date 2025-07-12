@@ -135,6 +135,9 @@ _Coming soon_
 - For userscript issues: check your userscript manager console
 - For extension issues: check browser console in VS Code tabs
 
+## Ref
+
+![copilot-screenshot](docs/copilot-screenshot.png)
 ## License
 
 MIT License - [snomiao](https://snomiao.com)
