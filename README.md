@@ -135,6 +135,10 @@ _Coming soon_
 - For userscript issues: check your userscript manager console
 - For extension issues: check browser console in VS Code tabs
 
+## See Also
+
+- [snomiao/claude-code-execute: A command-line tool for executing prompts with Claude Code until idle. Provides both 'claude-code-execute' and 'ccx' commands for automated Claude Code interactions.](https://github.com/snomiao/claude-code-execute/tree/main?tab=readme-ov-file)
+
 ## Ref
 
 ![copilot-screenshot](docs/copilot-screenshot.png)
