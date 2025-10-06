@@ -97,14 +97,15 @@ function loop() {
   const text = $$("div.rendered-markdown")
     .map((e) => e.innerText)
     .flatMap((e) => (e ? [e] : [])) // empty filter
-    .map((e) => e.replace(/\s+/g, " "));
+    .map((e) => e.replace(/\s+/g, " "))
+    .map((e) => e.trim())
 
-  for (const [action, matchers] of Object.entries(actionMatchers)) {
+  Object.entries(actionMatchers).find(([action, matchers]) => {
     if (text.some((s) => matchers.some((m) => s.match(m)))) {
       (actions[action] || actions.default)?.();
-      return;
+      return true;
     }
-  }
+  });
 }
 
 function $$(sel) {
