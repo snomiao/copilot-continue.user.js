@@ -3,7 +3,7 @@
 // @namespace   https://snomiao.com
 // @match       *://*/*
 // @grant       none
-// @version     1.2.9
+// @version     1.2.10
 // @author      snomiao
 // @description Auto-clicks the "Continue" button when GitHub Copilot gets stuck
 // @homepage    https://github.com/snomiao/copilot-continue.user.js
@@ -32,7 +32,7 @@
  */
 
 const actionMatchers = {
-  cilckContinue: [
+  clickContinue: [
     /^Copilot has been working on this problem for a while/,
     /^Run command in terminal/,
     /^Run command `.*`\?/,
@@ -40,6 +40,9 @@ const actionMatchers = {
     /^Continue to iterate\?/,
     /^Allow task run\?/,
     /^Allow test run\?/,
+  ],
+  clickAllow: [
+    /^Run .*? command\?/,
   ],
   clickGrant: [
     /^To get more relevant Copilot Chat results, we need permission to read the contents of your repository on GitHub./,
@@ -57,22 +60,25 @@ const actions = {
     console.warn("No action matched. Please check the action matchers."),
   refresh: () => (location.reload()),
   clickRetryIcon: () => $$('a[aria-label="Retry"]').findLast(Boolean)?.click(),
-  cilckContinue: () =>
-    $$("a.monaco-button").findLast(textContentEq("Continue"))?.click(),
+  clickContinue: () =>
+    $$("a.monaco-button").findLast(textEq("Continue"))?.click(),
+  clickAllow: () =>
+    $$("a.monaco-button").findLast(textEq("Allow"))?.click(),
   clickGrant: () =>
-    $$("a.monaco-button").findLast(textContentEq("Grant"))?.click(),
+    $$("a.monaco-button").findLast(textEq("Grant"))?.click(),
   clickTryAgain: (
     (tryAgainCount = 0) =>
       () => {
         if (tryAgainCount >= 3) return (location.reload());
-        const btn = $$("a.monaco-button").findLast(textContentEq("Try Again"));
+        const btn = $$("a.monaco-button").findLast(textEq("Try Again"));
         if (!btn) return;
         btn.click();
         tryAgainCount++;
       }
   )(),
 };
-function textContentEq(content) {
+
+function textEq(content) {
   return (e) => e.textContent === content;
 }
 const enable = !!document.querySelector("meta#vscode-workbench-auth-session");
